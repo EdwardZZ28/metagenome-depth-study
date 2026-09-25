@@ -130,6 +130,68 @@ was adequate, while silently under-reporting carbapenemase detections by roughly
 
 ---
 
+### 3.4 What is lost is not a random sample of what was there
+### 3.4 丢掉的不是随机的一部分
+
+Plasmid contigs called at 25 Gbp were used as a reference set and searched for in the assemblies
+of the same sample at lower depth (minimap2, alignment identity >= 95%). Two thresholds are
+reported: **strict** (alignment covers >= 80% of the reference contig, i.e. the plasmid was
+rebuilt) and **lenient** (>= 30%, i.e. the plasmid was seen at all). Full output in
+[`data/plasmid_fate_summary.txt`](data/plasmid_fate_summary.txt).
+
+以 25 Gbp 检出的质粒 contig 为参照集,在同一样本较低深度的组装结果中搜索(minimap2,比对
+相似度 >= 95%)。报告两个判定标准:**严格**(比对覆盖参照 contig 的 80% 以上,即质粒被完整
+重建)和**宽松**(覆盖 30% 以上,即质粒被看到)。完整输出见
+[`data/plasmid_fate_summary.txt`](data/plasmid_fate_summary.txt)。
+
+Recovery at 10 Gbp, median across the 11 samples / 10 Gbp 时 11 个样本的中位回收率:
+
+| Group / 分组 | n contigs | Strict / 严格 | Lenient / 宽松 |
+|---|---|---|---|
+| 1-2 kb | 8,645 | 6% | 9% |
+| 2-5 kb | 21,908 | 7% | 15% |
+| 5-10 kb | 9,633 | 13% | 26% |
+| > 10 kb | 4,282 | **17%** | **39%** |
+| carries an ARG / 携带 ARG | 290 | **19%** | **40%** |
+| no ARG / 不携带 ARG | 44,178 | 10% | 18% |
+| conjugative / 接合性 | 8,362 | 8% | 21% |
+| non-conjugative / 非接合性 | 36,106 | 10% | 18% |
+
+**EN.** Two things stand out. First, long plasmids survive shallow sequencing far better than
+short ones: at 10 Gbp a plasmid over 10 kb is four times more likely to be detected than one of
+1 to 2 kb. Second, and against expectation, **plasmids carrying an ARG are recovered about twice
+as often as plasmids without one** (40% vs 18% lenient, 19% vs 10% strict), consistently at every
+rung. The likely reason is not the ARG itself but its host: acquired ARGs sit disproportionately
+on plasmids of abundant organisms, which are covered more deeply and assemble more easily.
+
+This has a specific and awkward consequence. The numerator of "fraction of plasmids carrying an
+ARG" falls more slowly with depth than the denominator, so **a shallow library inflates that
+fraction**. At 10 Gbp the denominator retains 18% of reference plasmids while the numerator
+retains 40%, so the estimated ARG-carriage rate is roughly doubled. Mobilome studies that report
+plasmid-borne ARG proportions from shallow libraries are therefore biased upwards, not downwards,
+even though they see fewer plasmids overall. Conjugation genes, by contrast, make almost no
+difference to recovery (21% vs 18%), so conjugative elements are not unusually hard to assemble.
+
+**中文.** 有两点值得注意。第一,长质粒在浅测序下的存活率远高于短质粒:10 Gbp 时,大于 10 kb
+的质粒被检出的概率是 1 到 2 kb 质粒的四倍。第二,与预期相反,**携带 ARG 的质粒回收率约为不
+携带者的两倍**(宽松标准 40% 对 18%,严格标准 19% 对 10%),且在每一档都保持这个方向。
+原因很可能不是 ARG 本身,而是它的宿主:获得性 ARG 不成比例地位于高丰度菌的质粒上,这些质粒
+覆盖度更高,也更容易组装。
+
+这带来一个具体而别扭的后果。"携带 ARG 的质粒占比"这个指标,分子随深度下降的速度慢于分母,
+所以**浅测序会高估这个占比**。10 Gbp 时分母保留 18%,分子保留 40%,估算出的携带率大约被
+放大一倍。也就是说,基于浅测序文库报告质粒携带 ARG 比例的 mobilome 研究,偏差方向是偏高
+而非偏低,尽管它们看到的质粒总数更少。相比之下,接合基因对回收率几乎没有影响(21% 对 18%),
+说明接合性元件并不特别难组装。
+
+**Caveat / 注意.** Only 290 of 44,468 reference plasmid contigs carry an ARG at identity >= 80%,
+so the ARG-carriage comparison rests on a small numerator and has not yet been tested for
+per-sample consistency.
+44,468 条参照质粒 contig 中只有 290 条在 identity >= 80% 下携带 ARG,因此这一组比较的分子
+很小,尚未检验其在各样本间是否稳定。
+
+---
+
 ## 4. What this means in practice / 实践含义
 
 **EN.**

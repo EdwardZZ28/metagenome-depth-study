@@ -192,3 +192,70 @@ python3 scripts/plot_L1.py        # data/L1_summary.tsv -> figures/
 every figure in this report can be regenerated from what is in this repository.
 `summarise_L1.py` 需要流程输出目录;`plot_L1.py` 只需要仓库内的 TSV 文件,所以本报告中的每
 一张图都可以仅凭本仓库内容重新生成。
+
+---
+
+## 8. Plasmid fate analysis / 质粒去向分析
+
+The question is not how many plasmid contigs each depth yields, but **which** plasmids are lost.
+问题不是每个深度产出多少质粒 contig,而是**哪些**质粒被丢掉了。
+
+Contig names differ between depth rungs because each rung is assembled independently, so
+plasmids cannot be matched by name. They are matched by sequence alignment instead.
+不同深度档位是独立组装的,contig 名字不同,因此质粒无法按名字匹配,只能按序列比对匹配。
+
+```bash
+# reference: plasmid contigs called at 25 Gbp for this sample
+# query:     plasmid contigs called at a lower rung of the same sample
+minimap2 -x asm10 -t 8 --secondary=no <25Gbp_plasmid.fna> <tier_plasmid.fna> > <sample>__t<tier>.paf
+```
+
+Recovery rule / 判定规则:
+
+1. Keep alignments with `nmatch / blocklen >= 0.95` (identity). 保留相似度 >= 0.95 的比对。
+2. Merge the kept alignment intervals on each reference contig. 合并参照 contig 上的比对区间。
+3. A reference plasmid counts as recovered if merged coverage / reference length >= `MIN_COV`.
+   合并后覆盖度除以参照长度 >= `MIN_COV` 即判为回收。
+
+Two values of `MIN_COV` are reported because they answer different questions:
+报告两个 `MIN_COV` 值,因为它们回答不同的问题:
+
+| `MIN_COV` | Meaning / 含义 |
+|---|---|
+| 0.80 (strict) | the plasmid was **rebuilt** at this depth / 该深度下质粒被**完整重建** |
+| 0.30 (lenient) | the plasmid was **seen** at this depth, possibly in fragments / 该深度下质粒**被看到**,可能是碎片 |
+
+The gap between the two matters: at low depth a plasmid is often split across several short
+contigs, each covering too little of the reference to pass the strict threshold. The strict number
+therefore measures assembly completeness, the lenient number measures detection.
+两者的差距本身有意义:低深度下一个质粒常被拆成若干条短 contig,每条覆盖参照的比例都不足以
+通过严格阈值。因此严格标准衡量组装完整性,宽松标准衡量检出。
+
+Grouping variables come from the 25 Gbp results of the same sample:
+分组变量来自同一样本 25 Gbp 的结果:
+
+- **length** from the `length` column of the geNomad plasmid summary / 取自 geNomad 质粒汇总表的 `length` 列
+- **conjugative** if `conjugation_genes` is neither empty nor `NA` / `conjugation_genes` 非空且非 `NA`
+- **carries an ARG** if the contig name appears in the RGI output with `Cut_Off` of `Perfect` or
+  `Strict` and `Best_Identities >= 80`. The RGI `Contig` column holds the plain contig name, so
+  the two tables join directly.
+  若 contig 名出现在 RGI 输出中且 `Cut_Off` 为 `Perfect` 或 `Strict`、`Best_Identities >= 80`,
+  则判为携带 ARG。RGI 的 `Contig` 列就是纯 contig 名,两张表可以直接连接。
+
+Reported rates are the **median of the per-sample recovery rate**, and a sample contributes to a
+group only if it has at least 20 reference contigs in that group. Pooling all contigs first would
+let the two or three most complex samples dominate every group.
+报告值是**各样本回收率的中位数**,且某样本在某分组中至少要有 20 条参照 contig 才参与计算。
+若先把所有 contig 合并再计算,两三个最复杂的样本会主导每一个分组。
+
+Run it with / 运行方式:
+
+```bash
+python3 scripts/plasmid_fate.py                 # strict, MIN_COV=0.80
+MIN_COV=0.3 python3 scripts/plasmid_fate.py     # lenient
+```
+
+This script needs the geNomad and RGI outputs plus the PAF files, none of which are in this
+repository; the summary it produces is committed as `data/plasmid_fate_summary.txt`.
+该脚本需要 geNomad 和 RGI 的输出以及 PAF 文件,这些都不在本仓库内;它产生的汇总结果以
+`data/plasmid_fate_summary.txt` 提交。
