@@ -1,8 +1,10 @@
 # How deep is deep enough? 污水宏基因组测序深度对 AMR 指标的影响
 
-**Working report / 阶段性工作记录 — 2026-09-25**
-Status: Layer 1 (influent depth ladder) essentially complete. Layers 2 and 3 not started.
-状态:第一层(污水进水完整梯度)基本完成,第二层和第三层尚未开始。
+**Working report / 阶段性工作记录 — 2026-10-11**
+Status: core set complete (32 samples, 5 matrices, 320 datasets, read-based and assembly-based
+metrics). Bin quality (CheckM2, GTDB-Tk) and the two larger validation layers are still running.
+状态:核心组已完成(32 个样本、5 种基质、320 个数据集,读长与组装两端指标)。bin 质量
+(CheckM2、GTDB-Tk)和两个更大的验证层仍在运行。
 
 ---
 
@@ -33,14 +35,17 @@ sequencing batch and community composition are all held constant. Depth is the o
 
 | | |
 |---|---|
-| Samples / 样本 | 11 wastewater influent metagenomes, clean depth >= 25 Gbp |
-| Origin / 来源 | 9 public SRA/ENA runs from 9 different BioProjects, 2 in-house Australian samples |
+| Samples / 样本 | 32 metagenomes with clean depth >= 25 Gbp: 17 wastewater influent, 1 effluent, 6 preserved wastewater, 4 river water, 4 soil |
+| Origin / 来源 | public SRA/ENA runs plus in-house Australian samples; influent draws on 17 BioProjects |
 | Depth rungs / 深度档位 | 2, 5, 10, 15, 20, 25 Gbp of clean paired reads |
-| Datasets / 数据集总数 | 66 (11 samples x 6 rungs), one seed each |
+| Seeds / 随机种子 | 3 independent seqtk seeds at 2 and 5 Gbp, 1 elsewhere |
+| Datasets / 数据集总数 | 320 |
 | Reference / 参照 | the 25 Gbp rung of the same sample |
 
-No more than 2 samples come from any one BioProject, so the curves are not driven by one
-laboratory's data. 每个 BioProject 最多取 2 个样本,避免曲线被某一个实验室的数据主导。
+Sections 3.1 to 3.4 report the first 11 influent samples (66 datasets), where no more than two
+samples came from any one BioProject. Sections 3.5 and 3.6 report the full core set.
+第 3.1 到 3.4 节基于最初的 11 个进水样本(66 个数据集),当时每个 BioProject 最多取 2 个样本;
+第 3.5 和 3.6 节基于完整的核心组。
 
 The full pipeline at every rung: seqtk subsampling, ARGs-OAP (read-based ARG abundance),
 Kraken2/Bracken (taxonomy), MEGAHIT (assembly), RGI/CARD (contig-level ARGs),
@@ -192,6 +197,65 @@ per-sample consistency.
 
 ---
 
+### 3.5 The depth a sample needs depends on what it is
+### 3.5 一个样本需要多深,取决于它是什么
+
+The ladder was extended to 32 samples across five matrices, with three subsampling seeds at the
+2 and 5 Gbp rungs. Median recovery relative to the same sample at 25 Gbp:
+
+梯度扩展到五种基质共 32 个样本,2 和 5 Gbp 档各用三个随机种子。相对同一样本 25 Gbp 的中位
+回收率:
+
+![by matrix](figures/fig4_by_matrix.png)
+
+| Matrix / 基质 | n | Contigs @2 | @5 | @10 | @15 | Plasmid @10 |
+|---|---|---|---|---|---|---|
+| Wastewater influent / 污水进水 | 17 | 10% | 26% | 50% | 67% | 48% |
+| Wastewater effluent / 污水出水 | 1 | 6% | 18% | 41% | 62% | 53% |
+| Preserved wastewater / 加保存剂污水 | 6 | 6% | 18% | 43% | 65% | 39% |
+| River water / 河水 | 4 | 5% | 17% | 39% | 62% | 26% |
+| **Soil / 土壤** | 4 | **0%** | **1%** | **12%** | **35%** | **8%** |
+
+**EN.** ARG abundance normalised to 16S holds at 95% to 104% of the full-depth value in every
+matrix at every rung, so that result generalises beyond wastewater. Nothing else does. Soil is a
+different problem entirely: at 5 Gbp its assembly recovers 1% of the contigs and 1% of the plasmid
+contigs that 25 Gbp finds, and produces no genome bins at all. River water sits between soil and
+wastewater, and is noticeably worse for plasmids (26% at 10 Gbp against 48% for influent).
+Taxonomic profiling is far more robust than assembly in all matrices: Bracken species counts
+reach 78% to 91% at 10 Gbp where contigs reach 12% to 50%.
+
+The three wastewater forms (influent, effluent, and influent held with preservatives) give almost
+identical curves, which is a useful negative result: adding a preservative does not change how
+deep the sample needs to be sequenced.
+
+**中文.** 以 16S 归一化的 ARG 丰度在所有基质、所有档位都维持在满深度值的 95% 到 104%,所以
+这一条可以推广到污水以外。其余指标都不行。土壤完全是另一回事:5 Gbp 时它的组装只能回收
+25 Gbp 所得 contig 的 1%、质粒 contig 的 1%,而且一个基因组 bin 都产不出。河水介于土壤和
+污水之间,质粒回收尤其差(10 Gbp 时 26%,进水为 48%)。在所有基质中,物种分类都比组装稳健
+得多:10 Gbp 时 Bracken 物种数达到 78% 到 91%,而 contig 只有 12% 到 50%。
+
+污水的三种形态(进水、出水、加保存剂的进水)曲线几乎重合,这是一个有用的阴性结果:加保存剂
+不改变该样本需要测多深。
+
+### 3.6 Subsampling noise is small / 抽样随机性很小
+
+![seed noise](figures/fig5_seed_noise.png)
+
+Three independent seqtk seeds were run at the 2 and 5 Gbp rungs of every core sample. Median
+coefficient of variation across seeds: ARG abundance 1.9%, ARG richness 2.7%, contigs 0.4%,
+plasmid contigs 3.5%. The curves above are therefore not an artefact of which reads happened to
+be drawn. The only large coefficients of variation come from counts near zero, which is itself the
+soil and river-water result restated: at 2 Gbp those samples yield zero, one or two plasmid
+contigs, so a 173% coefficient of variation describes the values 0, 0, 2.
+
+每个核心样本的 2 和 5 Gbp 档都用三个独立的 seqtk 随机种子跑过。种子间变异系数中位数:
+ARG 丰度 1.9%,ARG 种类 2.7%,contig 0.4%,质粒 contig 3.5%。所以上面的曲线不是"碰巧抽到
+哪些 reads"造成的。唯一出现的大变异系数都来自接近零的计数,而那本身就是土壤和河水结果的另
+一种说法:2 Gbp 时这些样本只产出 0、1 或 2 条质粒 contig,173% 的变异系数描述的是 0、0、2
+这组数。
+
+---
+
 ## 4. What this means in practice / 实践含义
 
 **EN.**
@@ -205,6 +269,11 @@ per-sample consistency.
    underestimates, and the size of that underestimate depends on the sample.
 4. For surveillance of clinically high-risk genes, depth is not a tuning parameter. It decides
    whether a carbapenemase is reported at all.
+5. Do not carry a wastewater depth across to soil. At 5 Gbp a soil assembly returns 1% of what
+   25 Gbp returns and no genome bins, so assembly-based work on soil below 10 Gbp produces
+   almost nothing. River water needs more depth than wastewater for plasmids specifically.
+6. Where a project only needs who is present rather than what they carry, taxonomic profiling
+   survives shallow sequencing in every matrix tested.
 
 **中文.**
 
@@ -213,6 +282,11 @@ per-sample consistency.
 3. 如果产出涉及质粒、移动性、宿主归属或 MAG,25 Gbp 都不够。基于 10 到 15 Gbp 的已发表
    mobilome 和 MAG 结果很可能是系统性低估,低估幅度还随样本而变。
 4. 对高风险基因的监测而言,深度不是一个可调参数,它直接决定碳青霉烯酶会不会被报出来。
+5. 不要把污水的深度标准搬到土壤。5 Gbp 时土壤组装只能得到 25 Gbp 所得的 1%,且没有任何
+   基因组 bin,所以低于 10 Gbp 做土壤的组装类分析几乎得不到东西。河水在质粒这一项上需要
+   比污水更深。
+6. 如果项目只需要知道有哪些物种、而不是它们携带什么,物种分类在所有测试过的基质里都能
+   经受浅测序。
 
 ---
 
@@ -220,12 +294,11 @@ per-sample consistency.
 
 **EN.**
 
-- **Five datasets are incomplete.** The 20 Gbp rung currently has 7 of 11 samples because four
-  jobs were lost to a transient cluster fault and a race condition in an earlier version of the
-  pipeline; they are being rerun. Medians for the 20 Gbp rung are therefore provisional, and the
-  recovery table above uses only samples complete at both rungs being compared.
-- **One seed per rung.** Subsampling variability has not yet been quantified. Triplicate seeds at
-  the 2 and 5 Gbp rungs are planned.
+- **Effluent rests on one sample.** Only one effluent metagenome reached 25 Gbp, so the effluent
+  row of section 3.5 is a single curve, not a median. Eight more effluent samples are queued at a
+  15 Gbp ceiling in the next layer.
+- **Soil and river water have four samples each**, all from one flood study, so matrix and study
+  are confounded for those two rows.
 - **MetaBAT2 returned zero bins** for two datasets (R8188_S1 at 25 Gbp, SRR23730275 at 10 Gbp)
   and those are excluded from bin statistics.
 - **Bin quality is not yet assessed.** CheckM2 and GTDB-Tk have not been run, so "bins" here
@@ -239,10 +312,9 @@ per-sample consistency.
 
 **中文.**
 
-- **5 个数据集不完整。** 20 Gbp 档目前只有 11 个样本中的 7 个:4 个任务毁于集群临时故障和
-  早期流程版本里的一个竞争条件,正在重跑。因此 20 Gbp 档的中位数是暂定值;上面的回收率表格
-  只使用在两个比较档位都完整的样本。
-- **每档只抽了一次。** 抽样随机性尚未量化,计划在 2 和 5 Gbp 档各做三个随机种子。
+- **出水只有 1 个样本。** 只有一个出水宏基因组达到 25 Gbp,所以 3.5 节出水那一行是单条曲线
+  而非中位数。下一层会补 8 个出水样本,上限 15 Gbp。
+- **土壤和河水各只有 4 个样本**,且全部来自同一项洪水研究,因此这两行里基质和研究是混淆的。
 - **两个数据集 MetaBAT2 产出 0 个 bin**(R8188_S1 的 25 Gbp、SRR23730275 的 10 Gbp),
   已从 bin 统计中排除。
 - **尚未评估 bin 质量。** CheckM2 和 GTDB-Tk 还没跑,所以这里的 bins 是 MetaBAT2 的原始
