@@ -460,6 +460,76 @@ ratio 1.07) and strongest in the most uneven community tested (influent, 2.49).
 
 ---
 
+### 3.10 What the missing half of the ARG list actually weighs
+### 3.10 丢掉的那一半 ARG 清单实际上有多重
+
+Section 3.1 is awkward on its face: ARG abundance does not move with depth, yet half the ARG
+subtypes are missing at 10 Gbp. Both are true because the missing subtypes are the light ones.
+For each sample the 25 Gbp profile is the reference, and for each shallower rung we ask which
+subtypes it failed to see. Full output in
+[`data/detection_limit.txt`](data/detection_limit.txt).
+
+3.1 节表面上有矛盾:ARG 丰度不随深度变化,但 10 Gbp 时有一半 subtype 看不到。两者都对,
+因为漏掉的都是很轻的那些。以每个样本的 25 Gbp 结果为参照,看更浅的档位漏掉了哪些 subtype。
+完整输出见 [`data/detection_limit.txt`](data/detection_limit.txt)。
+
+**Effective detection floor.** The highest abundance among the subtypes a given depth missed, in
+ARG copies per 16S copy. Anything below this is at risk of being invisible at that depth.
+
+**有效检出下限。** 某个深度所漏掉的 subtype 中丰度最高的那一个,单位是每 16S 拷贝对应的 ARG
+拷贝数。低于这个值的基因在该深度下有看不见的风险。
+
+| Matrix / 基质 | 2 Gbp | 5 | 10 | 15 | 20 |
+|---|---|---|---|---|---|
+| Influent / 进水 | 3.0e-04 | 1.5e-04 | 6.8e-05 | 3.5e-05 | 2.1e-05 |
+| Effluent / 出水 | 4.9e-04 | 2.3e-04 | 1.0e-04 | 8.3e-05 | 8.3e-05 |
+| Preserved / 加保存剂 | 1.4e-03 | 5.7e-04 | 2.4e-04 | 1.8e-04 | 8.0e-05 |
+| River water / 河水 | 5.2e-04 | 2.0e-04 | 1.0e-04 | 5.8e-05 | 5.5e-05 |
+| Soil / 土壤 | 7.1e-04 | 3.7e-04 | 2.4e-04 | 1.4e-04 | 8.4e-05 |
+
+**What those misses weigh.** The same missed subtypes, summed, as a percentage of total ARG
+abundance at 25 Gbp:
+
+**这些漏掉的有多重。** 同样这些漏掉的 subtype 加总后,占 25 Gbp 总 ARG 丰度的百分比:
+
+| Matrix / 基质 | 2 Gbp | 5 | 10 | 15 | 20 |
+|---|---|---|---|---|---|
+| Influent / 进水 | 2.08% | 0.89% | 0.37% | 0.15% | 0.06% |
+| Effluent / 出水 | 4.91% | 2.12% | 0.88% | 0.44% | 0.20% |
+| Preserved / 加保存剂 | 12.55% | 6.30% | 2.70% | 1.32% | 0.47% |
+| River water / 河水 | 7.55% | 3.79% | 1.95% | 0.86% | 0.39% |
+| Soil / 土壤 | 10.10% | 5.53% | 2.54% | 1.06% | 0.44% |
+
+**EN.** In influent, 2 Gbp misses roughly half the subtype list but only 2.08% of the abundance,
+and 10 Gbp misses 0.37%. The detection floor halves with each step up the ladder: 3.0e-04 at
+2 Gbp, 6.8e-05 at 10 Gbp, 2.1e-05 at 20 Gbp. That is the whole reconciliation. Depth buys
+sensitivity to rare genes, and rare genes weigh almost nothing, so a study measuring total
+abundance can use 5 Gbp while a study asking which genes are present cannot.
+
+This is also the quantitative form of section 3.3. Carbapenemases and mobile colistin resistance
+genes are rare in wastewater by definition, which places them near or below the detection floor
+of a shallow library. The floor is the number a surveillance programme should quote: at 10 Gbp of
+influent, an ARG below about 7e-05 copies per 16S copy may simply not appear, and its absence
+from the report means nothing.
+
+Preserved wastewater has the highest floor and loses the most abundance at every rung (12.55% at
+2 Gbp against 2.08% for influent), so the preservative makes the community less even and pushes
+more of the resistome under the floor.
+
+**中文.** 进水在 2 Gbp 漏掉约一半的 subtype 清单,却只漏掉 2.08% 的丰度;10 Gbp 时只漏掉
+0.37%。检出下限每上一档大约减半:2 Gbp 时 3.0e-04,10 Gbp 时 6.8e-05,20 Gbp 时 2.1e-05。
+矛盾就此化解。深度买到的是对稀有基因的灵敏度,而稀有基因几乎没有重量,所以测总丰度的研究
+可以用 5 Gbp,而要回答"有哪些基因"的研究不行。
+
+这也是 3.3 节的定量形式。碳青霉烯酶和可移动黏菌素耐药基因按定义在污水中就是稀有的,这使它们
+处于浅测序文库检出下限附近或之下。下限正是监测项目应当报出的数字:在 10 Gbp 的进水中,丰度
+低于约 7e-05 copies/16S 的 ARG 可能根本不会出现,而它在报告中的缺席不代表任何事情。
+
+加保存剂的污水下限最高,每一档漏掉的丰度也最多(2 Gbp 时 12.55%,进水为 2.08%),说明
+保存剂让群落更不均匀,把更多 resistome 推到了下限之下。
+
+---
+
 ## 4. What this means in practice / 实践含义
 
 **EN.**

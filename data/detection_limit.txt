@@ -1,0 +1,16 @@
+
+=== effective detection floor: highest copies/16S among subtypes this depth missed
+matrix                          2          5         10         15         20
+influent                 2.97e-04   1.47e-04   6.78e-05   3.51e-05   2.11e-05
+effluent                 4.88e-04   2.26e-04   1.03e-04   8.29e-05   8.29e-05
+preserved_wastewater     1.40e-03   5.74e-04   2.44e-04   1.82e-04   8.04e-05
+river_water              5.17e-04   1.99e-04   1.04e-04   5.82e-05   5.47e-05
+soil                     7.14e-04   3.71e-04   2.43e-04   1.41e-04   8.40e-05
+
+=== abundance missed, as % of total ARG abundance at 25 Gbp
+matrix                          2          5         10         15         20
+influent                    2.08      0.89      0.37      0.15      0.06
+effluent                    4.91      2.12      0.88      0.44      0.20
+preserved_wastewater       12.55      6.30      2.70      1.32      0.47
+river_water                 7.55      3.79      1.95      0.86      0.39
+soil                       10.10      5.53      2.54      1.06      0.44
