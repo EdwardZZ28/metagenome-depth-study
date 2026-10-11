@@ -368,6 +368,10 @@ from "soil needs more depth": the shape of the curve, not only its height, diffe
 
 **EN.**
 
+- **25 Gbp is a budget ceiling, not a true value.** Every recovery percentage in sections 3.1 to
+  3.5 is relative to the 25 Gbp rung of the same sample, and section 3.7 shows that assembly
+  metrics are still climbing there. True recovery against the full community is therefore lower
+  than every percentage quoted. Marginal return (section 3.7) is the denominator-free alternative.
 - **Effluent rests on one sample.** Only one effluent metagenome reached 25 Gbp, so the effluent
   row of section 3.5 is a single curve, not a median. Eight more effluent samples are queued at a
   15 Gbp ceiling in the next layer.
@@ -386,6 +390,9 @@ from "soil needs more depth": the shape of the curve, not only its height, diffe
 
 **中文.**
 
+- **25 Gbp 是预算上限,不是真值。** 3.1 到 3.5 节的所有回收率都相对于同一样本的 25 Gbp 档,
+  而 3.7 节表明组装类指标在那里仍在上升。因此相对真实群落的回收率比文中引用的每一个百分比
+  都更低。边际收益(3.7 节)是不依赖分母的替代指标。
 - **出水只有 1 个样本。** 只有一个出水宏基因组达到 25 Gbp,所以 3.5 节出水那一行是单条曲线
   而非中位数。下一层会补 8 个出水样本,上限 15 Gbp。
 - **土壤和河水各只有 4 个样本**,且全部来自同一项洪水研究,因此这两行里基质和研究是混淆的。
@@ -401,19 +408,29 @@ from "soil needs more depth": the shape of the curve, not only its height, diffe
 
 ## 6. Next steps / 下一步
 
-1. Finish the 16 reruns, then recompute every table in this report. 完成 16 个重跑,重算全部表格。
-2. Kraken2/Bracken for the remaining datasets; add taxonomic richness and diversity to the curves.
-   补齐剩余数据集的 Kraken2/Bracken,把物种丰富度和多样性加入曲线。
-3. CheckM2 and GTDB-Tk on all bins in a single pass; report high-quality MAG yield per depth.
-   一次性对全部 bin 跑 CheckM2 和 GTDB-Tk,报告每个深度的高质量 MAG 产出。
-4. Triplicate seeds at 2 and 5 Gbp to quantify subsampling noise. 在 2 和 5 Gbp 做三个随机种子。
-5. Layer 2: the same ladder across seven matrices (influent, effluent, sludge, preserved
-   wastewater, soil, river water, air). 第二层:七种基质的同一套梯度。
-6. Layer 3: 176 further samples at 10 and 5 Gbp, read-based metrics only, to test whether the
-   recovery ratios hold at scale. 第三层:176 个样本的 10 和 5 Gbp 两档,只做读长层面,检验
-   回收率是否在更大规模上成立。
-
----
+1. **Finish the running jobs.** 168 datasets take effluent from 1 to 8 samples and add 4 air
+   samples, both capped at 15 Gbp; GTDB-Tk is classifying the 1,627 high-quality bins.
+   完成正在跑的任务:168 个数据集把出水从 1 个扩到 8 个并加入 4 个空气样本(上限 15 Gbp);
+   GTDB-Tk 正在对 1,627 个高质量 bin 做分类。
+2. **Extend soil to 30 and 35 Gbp.** Section 3.7 shows the soil curve is convex and still
+   accelerating at 25 Gbp, so the productive range begins somewhere above the current ceiling.
+   The four soil samples have 31 to 40 Gbp of clean data, enough for two more rungs.
+   把土壤扩展到 30 和 35 Gbp:3.7 节显示土壤曲线是凸的,到 25 Gbp 仍在加速,高产区间开始于
+   当前上限之上。四个土壤样本有 31 到 40 Gbp 的 clean 数据,够再加两档。
+3. **Report MAG yield as marginal return**, i.e. how many additional classifiable high-quality
+   genomes each extra Gbp buys, rather than recovery against 25 Gbp.
+   把 MAG 产出改用边际收益报告,即每多测 1 Gbp 多得几个可分类的高质量基因组。
+4. **Repurpose the third layer.** It was designed to test recovery ratios at scale, but recovery
+   needs a 25 Gbp denominator that those 171 samples do not have. Better use: sequence each at
+   2 and 10 Gbp and test whether the contig count at 2 Gbp predicts what 10 Gbp will yield, which
+   is the practical form of the complexity result in section 3.2.
+   第三层改变用途:它原本用来在更大规模上检验回收率,但回收率需要 25 Gbp 分母,而那 171 个
+   样本没有。更好的用法是每个样本只跑 2 和 10 Gbp 两档,检验 2 Gbp 的 contig 数能否预测
+   10 Gbp 的产出,这正是 3.2 节复杂度结果的可操作形式。
+5. **Per-sample curves as the main figure.** Each of the 32 samples is an independent within-sample
+   experiment, so plotting all 32 curves is stronger evidence than a median.
+   把每个样本的曲线作为主图:32 个样本各自都是一次独立的样本内实验,画出 32 条曲线比中位数
+   更有说服力。
 
 ## 7. Repository layout / 仓库结构
 data/L1_summary.tsv one row per dataset, all extracted metrics / 每个数据集一行的全部指标
