@@ -395,6 +395,71 @@ depth-sensitive 量之间的比值则有偏,且不给出任何提示。**
 
 ---
 
+### 3.9 Why the ratio moves: coverage, not a tool artefact
+### 3.9 比例为什么会动:是覆盖度,不是工具的假象
+
+A ratio that changes with depth has two possible explanations. Either it is real, driven by
+coverage, or it is an artefact of how plasmids are called: low-depth assemblies produce shorter
+contigs, and geNomad scores contigs on the genes it can see, so the plasmid set itself could be
+biased. Three checks separate them. Full output in
+[`data/why_ratio.txt`](data/why_ratio.txt).
+
+一个随深度变化的比值有两种可能解释。要么它是真实的、由覆盖度驱动;要么它是质粒判定方式造成的
+假象:低深度组装产出更短的 contig,而 geNomad 依据能看到的基因给 contig 打分,因此质粒集合
+本身可能有偏。三项检验把两者分开。完整输出见 [`data/why_ratio.txt`](data/why_ratio.txt)。
+
+**A. The same inflation appears over all contigs, not only plasmids.** In influent, ARG-bearing
+contigs are 0.095% of all contigs at 2 Gbp and 0.046% at 25 Gbp, the same two-fold shift seen in
+the plasmid subset. The bias therefore happens during assembly and applies to every contig;
+geNomad adds nothing to it.
+
+**A. 同样的放大也出现在全部 contig 上,不只是质粒。** 进水中,带 ARG 的 contig 在 2 Gbp 时
+占全部 contig 的 0.095%,25 Gbp 时为 0.046%,与质粒子集中看到的两倍差异相同。因此这个偏差
+发生在组装阶段、对所有 contig 一视同仁,geNomad 没有额外贡献。
+
+**B. The inflation survives inside a fixed length band.** Restricting to plasmid contigs of 2 to
+5 kb, influent still goes from 1.30% at 2 Gbp to 0.52% at 25 Gbp, a 2.5-fold shift, slightly
+larger than the unstratified comparison. Shorter contigs are not the cause.
+
+**B. 固定长度区间内放大依然存在。** 只取 2 到 5 kb 的质粒 contig,进水仍从 2 Gbp 的 1.30%
+降到 25 Gbp 的 0.52%,放大 2.5 倍,比不分层时还略大。contig 变短不是原因。
+
+**C. ARG-bearing plasmids are more deeply covered.** Mean coverage at 25 Gbp, from the binning
+depth table:
+
+**C. 带 ARG 的质粒覆盖度更高。** 25 Gbp 时的平均覆盖度,取自分箱用的深度表:
+
+| Matrix / 基质 | n ARG-bearing | coverage | n other | coverage | ratio |
+|---|---|---|---|---|---|
+| Influent / 进水 | 415 | 26.95 | 67,739 | 10.82 | **2.49** |
+| Preserved / 加保存剂 | 35 | 13.48 | 12,671 | 7.65 | **1.76** |
+| Effluent / 出水 | 8 | 11.87 | 2,149 | 8.22 | **1.44** |
+| Soil / 土壤 | 1 | 10.17 | 440 | 7.63 | 1.33 |
+| River water / 河水 | 3 | 12.58 | 2,199 | 11.71 | 1.07 |
+
+**EN.** The chain closes. Acquired ARGs sit disproportionately on plasmids of abundant organisms,
+so ARG-bearing plasmid contigs carry 1.4 to 2.5 times the coverage of other plasmid contigs. High
+coverage is exactly what shallow sequencing preserves, so those contigs assemble first and are
+lost last. The numerator of the carriage ratio therefore decays more slowly than the denominator,
+and the ratio is inflated at low depth by a factor close to the coverage ratio itself.
+
+So the measurement is not wrong and the pipeline is not at fault. The bias is a real property of
+shotgun assembly at finite depth, which is worse news than a tool artefact would be: it cannot be
+corrected by changing software, and it applies to every published plasmid-carriage fraction
+derived from a shallow library. The effect is weakest where coverage is most uniform (river water,
+ratio 1.07) and strongest in the most uneven community tested (influent, 2.49).
+
+**中文.** 链条闭合了。获得性 ARG 不成比例地位于高丰度菌的质粒上,所以带 ARG 的质粒 contig
+覆盖度是其他质粒 contig 的 1.4 到 2.5 倍。而高覆盖度正是浅测序能保住的那一部分,这些 contig
+最先被拼出来、最后才丢失。于是携带率这个比值的分子衰减得比分母慢,低深度下该比值被放大的
+倍数接近覆盖度之比本身。
+
+所以测量没有错,流程也没有问题。这个偏差是有限深度下鸟枪法组装的真实性质,这比"工具假象"
+更糟:它无法通过换软件来纠正,而且适用于所有基于浅测序文库报告的质粒携带比例。覆盖度越均匀
+效应越弱(河水 1.07),群落越不均匀效应越强(进水 2.49)。
+
+---
+
 ## 4. What this means in practice / 实践含义
 
 **EN.**
