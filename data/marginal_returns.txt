@@ -1,0 +1,59 @@
+=== marginal gain per extra Gbp, median across samples (units per Gbp) ===
+matrix                metric            2->5     5->10    10->15    15->20    20->25    
+influent              copies_16S             -0.0      0.0     -0.0     -0.0     -0.0
+influent              arg_subtypes           40.7     18.6     12.6      9.6      8.0
+influent              rgi_id80                7.3      4.8      3.0      3.6      2.4
+influent              bracken_species      9732.7   4721.8   2119.8   1126.4    700.8
+influent              contigs             10249.0  10340.4   9324.6   8305.4   7515.0
+influent              plasmid               230.0    179.4    146.8    156.2    157.4
+influent              conjugative            44.7     36.2     23.6     29.4     28.4
+influent              virus                 187.0    181.6    191.8    202.2    194.0
+influent              bins                    8.3      6.6      5.4      5.2      5.0
+
+effluent              copies_16S              0.0      0.0      0.0      0.0     -0.0
+effluent              arg_subtypes           22.3     10.0      6.2      6.6      4.2
+effluent              rgi_id80                2.0      0.4      2.2      2.4      0.2
+effluent              bracken_species     10957.3   4264.6   1447.0    604.8    321.4
+effluent              contigs              9524.3  10494.0   9419.8   8946.6   8377.2
+effluent              plasmid               110.7    110.2     81.0     73.4     49.2
+effluent              conjugative            27.7     16.8     18.6     15.4     12.6
+effluent              virus                 257.7    250.2    245.0    254.4    260.0
+effluent              bins                    8.3      6.4      8.2      8.6      9.2
+
+preserved_wastewater  copies_16S             -0.0     -0.0     -0.0     -0.0      0.0
+preserved_wastewater  arg_subtypes           24.7     13.6      8.9      6.7      5.4
+preserved_wastewater  rgi_id80                0.8      0.1      0.8      0.9      0.8
+preserved_wastewater  bracken_species      5822.2   3477.3   1852.1   1283.9    908.3
+preserved_wastewater  contigs             10954.3  12595.7  11446.7   9419.9   9987.0
+preserved_wastewater  plasmid                63.2     57.3     64.1     57.7     54.2
+preserved_wastewater  conjugative            18.3     14.8     16.4     11.1      9.1
+preserved_wastewater  virus                 715.5    511.9    323.3    264.2    239.5
+preserved_wastewater  bins                    3.8      4.4      4.1      3.9      3.4
+
+river_water           copies_16S              0.0      0.0      0.0      0.0     -0.0
+river_water           arg_subtypes           20.0     13.5      9.4      6.6      5.6
+river_water           rgi_id80                0.0      0.1     -0.1      0.2     -0.1
+river_water           bracken_species     11615.8   4255.1   1308.1    475.9    214.0
+river_water           contigs              5040.2   5900.3   5668.4   4911.8   4523.9
+river_water           plasmid                16.8     21.2     21.9     22.0     18.6
+river_water           conjugative             0.0      0.2      1.1      1.4      0.6
+river_water           virus                  58.2     60.6     64.8     74.3     68.7
+river_water           bins                    2.8      1.8      2.3      1.3      1.8
+
+soil                  copies_16S             -0.0      0.0     -0.0     -0.0     -0.0
+soil                  arg_subtypes           13.0      9.6      6.0      4.4      2.7
+soil                  rgi_id80                0.0      0.1      0.0      0.0      0.0
+soil                  bracken_species      7019.8   3732.2   1861.8   1103.4    686.5
+soil                  contigs               189.3   1032.8   2293.3   3010.9   3510.0
+soil                  plasmid                 0.2      1.1      2.2      5.0      8.2
+soil                  conjugative             0.2      0.1      0.7      0.7      0.9
+soil                  virus                   4.0     13.7     22.3     19.8     19.3
+soil                  bins                    0.0      0.4      0.4      0.6      0.8
+
+=== deceleration: last step (20->25) as a fraction of the first (2->5) ===
+matrix                   copies_16S  arg_subtype     rgi_id80  bracken_spe      contigs      plasmid  conjugative        virus         bins
+influent                      0.03         0.20         0.38         0.07         0.58         0.58         0.57         0.77         0.60 
+effluent                     -0.14         0.19         0.10         0.03         0.88         0.44         0.46         1.01         1.10 
+preserved_wastewater          0.12         0.23         0.30         0.16         0.86         1.02         0.96         0.42         1.01 
+river_water                  -0.03         0.22         0.00         0.02         1.02         1.69         0.60         1.20         0.45 
+soil                          0.08         0.22            -         0.10        16.69        14.64         2.30         3.81         3.60 

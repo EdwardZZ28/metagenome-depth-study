@@ -73,14 +73,18 @@ Median recovery relative to the same sample at 25 Gbp:
 | 20 | **100%** | 95% | 93% | 87% | 85% | 84% | 84% | 91% |
 
 **EN.** ARG abundance normalised to 16S is flat to two decimal places across a 12.5-fold range of
-depth. Every count-based metric, by contrast, is still climbing at 25 Gbp and none of them has
-reached a plateau. At the depth most published wastewater studies actually use, about 10 to
-14 Gbp, roughly **half** of the plasmid contigs, conjugative elements and genome bins that
-25 Gbp would have found are simply absent.
+depth. Every count-based metric, by contrast, is still climbing at the top of the ladder. At the
+depth most published wastewater studies actually use, about 10 to 14 Gbp, roughly **half** of the
+plasmid contigs, conjugative elements and genome bins that 25 Gbp would have found are simply
+absent. Note that these percentages are relative to 25 Gbp, which is a budget ceiling rather than
+a true value; section 3.7 restates the same data as marginal return per Gbp, which does not depend
+on that denominator.
 
 **中文.** 以 16S 归一化的 ARG 丰度在 12.5 倍的深度范围内小数点后两位都不变。相比之下,所有
-计数型指标到 25 Gbp 仍在上升,没有一个进入平台期。在已发表污水研究实际常用的深度(约 10 到
-14 Gbp)下,25 Gbp 本可以找到的质粒 contig、接合性元件和基因组 bin,**大约有一半根本不会出现**。
+计数型指标到梯度顶端仍在上升。在已发表污水研究实际常用的深度(约 10 到 14 Gbp)下,25 Gbp
+本可以找到的质粒 contig、接合性元件和基因组 bin,**大约有一半根本不会出现**。注意这些百分比
+是相对 25 Gbp 而言的,而 25 Gbp 是预算上限而非真值;3.7 节用每 Gbp 边际收益重新表述同一批
+数据,那个指标不依赖这个分母。
 
 ### 3.2 How much 10 Gbp recovers depends on the sample
 ### 3.2 10 Gbp 能回收多少,取决于样本本身
@@ -256,6 +260,72 @@ ARG 丰度 1.9%,ARG 种类 2.7%,contig 0.4%,质粒 contig 3.5%。所以上面的
 
 ---
 
+### 3.7 The useful question is not "is it saturated" but "what does the next Gbp buy"
+### 3.7 有用的问题不是"饱和了没有",而是"下一个 Gbp 买到什么"
+
+Recovery percentages depend on the 25 Gbp denominator, and 25 Gbp is a ceiling set by what is
+affordable, not a true value. Marginal return does not have that problem: for each sample the gain
+between two adjacent rungs is divided by the Gbp between them. Full output in
+[`data/marginal_returns.txt`](data/marginal_returns.txt).
+
+回收率百分比依赖 25 Gbp 这个分母,而 25 Gbp 是按可负担程度设定的上限,不是真值。边际收益没有
+这个问题:对每个样本,取相邻两档之间的增量除以两档之间的 Gbp 数。完整输出见
+[`data/marginal_returns.txt`](data/marginal_returns.txt)。
+
+Median marginal gain per extra Gbp, wastewater influent (17 samples):
+污水进水(17 个样本)每多测 1 Gbp 的中位边际收益:
+
+| Metric / 指标 | 2→5 | 5→10 | 10→15 | 15→20 | 20→25 |
+|---|---|---|---|---|---|
+| ARG abundance (copies/16S) | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| ARG subtypes | 40.7 | 18.6 | 12.6 | 9.6 | 8.0 |
+| Bracken species | 9,733 | 4,722 | 2,120 | 1,126 | 701 |
+| Contigs | 10,249 | 10,340 | 9,325 | 8,305 | 7,515 |
+| Plasmid contigs | 230 | 179 | 147 | 156 | 157 |
+| Virus contigs | 187 | 182 | 192 | 202 | 194 |
+| Bins | 8.3 | 6.6 | 5.4 | 5.2 | 5.0 |
+
+Deceleration, defined as the 20→25 gain divided by the 2→5 gain. A value near zero means the
+metric has levelled off inside the window; near one means it is still climbing at the same rate;
+above one means it is accelerating.
+减速比定义为 20→25 的增益除以 2→5 的增益。接近 0 表示该指标在窗口内已经趋平;接近 1 表示
+仍以同样速率上升;大于 1 表示还在加速。
+
+| Matrix / 基质 | copies/16S | ARG subtypes | species | contigs | plasmid | virus | bins |
+|---|---|---|---|---|---|---|---|
+| Influent / 进水 | 0.03 | 0.20 | 0.07 | 0.58 | 0.58 | 0.77 | 0.60 |
+| Effluent / 出水 | -0.14 | 0.19 | 0.03 | 0.88 | 0.44 | 1.01 | 1.10 |
+| Preserved / 加保存剂 | 0.12 | 0.23 | 0.16 | 0.86 | 1.02 | 0.42 | 1.01 |
+| River water / 河水 | -0.03 | 0.22 | 0.02 | 1.02 | 1.69 | 1.20 | 0.45 |
+| **Soil / 土壤** | 0.08 | 0.22 | 0.10 | **16.69** | **14.64** | **3.81** | **3.60** |
+
+**EN.** Three behaviours, not one. Abundance, ARG richness and taxonomic richness flatten inside
+the window: in influent the species count buys 9,733 species per Gbp at the 2→5 step and 701 at
+20→25, a deceleration of 0.07. Assembly-derived counts do not flatten: contigs, plasmid contigs
+and bins still return 58% to 60% of their initial rate at the top of the ladder, and virus contigs
+return 77% in influent and 101% in effluent, meaning no deceleration at all. In that regime every
+extra Gbp buys about the same amount, so the decision is purely a budget question: roughly 7,500
+contigs, 157 plasmid contigs and 5 bins per Gbp in influent.
+
+Soil is a third shape. Its deceleration ratios are far above one (contigs 16.7, plasmid contigs
+14.6), which means the curve is convex: the 20→25 step returns more than ten times what the 2→5
+step returned. Soil assembly has not reached its productive range by 25 Gbp, and spending
+anything below about 10 Gbp on soil assembly returns almost nothing. This is a different statement
+from "soil needs more depth": the shape of the curve, not only its height, differs from water.
+
+**中文.** 是三种行为,不是一种。丰度、ARG 种类和物种丰富度在窗口内趋平:进水的物种数在 2→5
+段每 Gbp 买到 9,733 个物种,到 20→25 段只剩 701 个,减速比 0.07。组装类计数不趋平:contig、
+质粒 contig 和 bin 在梯度顶端仍保持初始速率的 58% 到 60%,病毒 contig 在进水是 77%、出水
+101%,也就是完全没有减速。在这种情形下,每多测 1 Gbp 买到的东西大致相同,所以决策纯粹是预算
+问题:进水每 Gbp 约 7,500 个 contig、157 个质粒 contig、5 个 bin。
+
+土壤是第三种形状。它的减速比远大于 1(contig 16.7,质粒 contig 14.6),意味着曲线是凸的:
+20→25 这一段的收益是 2→5 段的十倍以上。土壤组装到 25 Gbp 还没有进入高产区间,而在约 10 Gbp
+以下做土壤组装几乎得不到任何东西。这和"土壤需要更深"是不同的陈述:和水样相比,不同的不只是
+曲线的高度,还有它的形状。
+
+---
+
 ## 4. What this means in practice / 实践含义
 
 **EN.**
@@ -264,9 +334,11 @@ ARG 丰度 1.9%,ARG 种类 2.7%,contig 0.4%,质粒 contig 3.5%。所以上面的
    spending more is waste.
 2. If the deliverable is a list of which ARGs are present, 10 Gbp returns about 80% of the
    subtypes and the curve is still rising.
-3. If the deliverable involves plasmids, mobility, host assignment or MAGs, 25 Gbp is not enough.
-   Published mobilome and MAG results from 10 to 15 Gbp libraries are likely to be systematic
-   underestimates, and the size of that underestimate depends on the sample.
+3. If the deliverable involves plasmids, mobility or MAGs, there is no depth inside this window at
+   which the return stops. Every extra Gbp of influent buys about 7,500 contigs, 157 plasmid
+   contigs and 5 bins, at a rate that barely falls between 2 and 25 Gbp, so the choice is a budget
+   decision rather than a saturation point. Published mobilome and MAG results from 10 to 15 Gbp
+   libraries are systematic underestimates of what a deeper library would have found.
 4. For surveillance of clinically high-risk genes, depth is not a tuning parameter. It decides
    whether a carbapenemase is reported at all.
 5. Do not carry a wastewater depth across to soil. At 5 Gbp a soil assembly returns 1% of what
@@ -279,8 +351,10 @@ ARG 丰度 1.9%,ARG 种类 2.7%,contig 0.4%,质粒 contig 3.5%。所以上面的
 
 1. 如果产出是 ARG 丰度或药物类别组成,5 到 10 Gbp 就够,再多是浪费。
 2. 如果产出是"检出了哪些 ARG"的清单,10 Gbp 能拿到约八成 subtype,曲线仍在上升。
-3. 如果产出涉及质粒、移动性、宿主归属或 MAG,25 Gbp 都不够。基于 10 到 15 Gbp 的已发表
-   mobilome 和 MAG 结果很可能是系统性低估,低估幅度还随样本而变。
+3. 如果产出涉及质粒、移动性或 MAG,在这个窗口内不存在"收益停止"的深度。进水每多测 1 Gbp
+   约买到 7,500 个 contig、157 个质粒 contig 和 5 个 bin,而且这个速率在 2 到 25 Gbp 之间
+   几乎不下降,所以这是预算决策而非饱和点。基于 10 到 15 Gbp 的已发表 mobilome 和 MAG 结果
+   是对更深文库所能发现内容的系统性低估。
 4. 对高风险基因的监测而言,深度不是一个可调参数,它直接决定碳青霉烯酶会不会被报出来。
 5. 不要把污水的深度标准搬到土壤。5 Gbp 时土壤组装只能得到 25 Gbp 所得的 1%,且没有任何
    基因组 bin,所以低于 10 Gbp 做土壤的组装类分析几乎得不到东西。河水在质粒这一项上需要
