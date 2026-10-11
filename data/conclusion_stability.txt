@@ -1,0 +1,40 @@
+
+=== Spearman correlation of species abundances vs the same sample at 25 Gbp
+matrix                        2        5       10       15       20
+influent                  0.915    0.956    0.975    0.984    0.990
+effluent                  0.849    0.934    0.964    0.976    0.985
+preserved_wastewater      0.891    0.944    0.970    0.978    0.989
+river_water               0.842    0.943    0.968    0.979    0.987
+soil                      0.937    0.971    0.983    0.989    0.994
+
+=== how many of the top 10 species abundances at 25 Gbp are also top 10 here
+matrix                        2        5       10       15       20
+influent                   10.0     10.0     10.0     10.0     10.0
+effluent                   10.0     10.0     10.0     10.0     10.0
+preserved_wastewater       10.0     10.0     10.0     10.0     10.0
+river_water                10.0     10.0     10.0     10.0     10.0
+soil                       10.0     10.0     10.0     10.0     10.0
+
+=== Spearman correlation of ARG drug classes vs the same sample at 25 Gbp
+matrix                        2        5       10       15       20
+influent                  0.986    0.994    0.995    0.998    0.999
+effluent                  0.992    0.983    0.995    1.000    0.997
+preserved_wastewater      0.981    0.989    0.992    0.994    0.996
+river_water               0.953    0.968    0.990    0.994    0.995
+soil                      0.955    0.980    0.992    0.994    0.996
+
+=== how many of the top 5 ARG drug classes at 25 Gbp are also top 5 here
+matrix                        2        5       10       15       20
+influent                    5.0      5.0      5.0      5.0      5.0
+effluent                    5.0      5.0      5.0      5.0      5.0
+preserved_wastewater        4.5      5.0      5.0      5.0      5.0
+river_water                 4.5      4.0      4.5      5.0      4.5
+soil                        5.0      5.0      5.0      5.0      5.0
+
+=== plasmid contigs carrying an ARG, as % of all plasmid contigs
+matrix                        2        5       10       15       20       25
+influent                  0.98%    1.01%    0.70%    0.63%    0.67%    0.62%
+effluent                  0.78%    0.17%    0.35%    0.32%    0.31%    0.37%
+preserved_wastewater      0.46%    0.32%    0.22%    0.31%    0.30%    0.21%
+river_water               0.00%    0.00%    0.00%    0.00%    0.00%    0.08%
+soil                          -        -    0.00%    0.00%    0.00%    0.00%

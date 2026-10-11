@@ -326,6 +326,75 @@ from "soil needs more depth": the shape of the curve, not only its height, diffe
 
 ---
 
+### 3.8 Shallow data does not degrade every conclusion equally. One kind of conclusion is wrong, not merely incomplete
+### 3.8 浅测序并非均匀地降低所有结论的质量,有一类结论是错的,而不只是不完整
+
+Everything above measures how much is missing. This section asks a different question: taking each
+sample on its own, does the **answer** change with depth? Three checks against the same sample at
+25 Gbp. Full output in
+[`data/conclusion_stability.txt`](data/conclusion_stability.txt).
+
+上面的内容衡量的都是"缺了多少"。这一节问的是另一个问题:就每个样本自身而言,**答案**会不会
+随深度改变?三项检验,都与同一样本的 25 Gbp 结果比较。完整输出见
+[`data/conclusion_stability.txt`](data/conclusion_stability.txt)。
+
+**Check 1, species composition.** Spearman correlation with the 25 Gbp profile at 2 Gbp: 0.84 to
+0.94 across the five matrices, rising to 0.96 to 0.98 by 10 Gbp. More directly: in every matrix,
+**all ten of the top ten species at 25 Gbp are already the top ten at 2 Gbp**, with no exceptions
+among the 32 samples.
+
+**检验一,物种组成。** 2 Gbp 与 25 Gbp 的 Spearman 相关在五种基质中为 0.84 到 0.94,到 10 Gbp
+升至 0.96 到 0.98。更直接的是:在每一种基质中,**25 Gbp 的前十名物种在 2 Gbp 时已经全部位列
+前十**,32 个样本无一例外。
+
+**Check 2, ARG drug-class composition.** Correlation at 2 Gbp is 0.95 to 0.99; the top five drug
+classes are the same five, except occasionally in river water where contig-level ARGs are scarce
+to begin with.
+
+**检验二,ARG 药物类别组成。** 2 Gbp 时相关系数 0.95 到 0.99;前五名药物类别就是那五个,
+只有河水偶尔差一个,而河水本身 contig 层面的 ARG 就极少。
+
+**Check 3, the fraction of plasmid contigs that carry an ARG.** This one does change, and in a
+consistent direction:
+
+**检验三,携带 ARG 的质粒 contig 占全部质粒 contig 的比例。** 这一项确实变了,而且方向一致:
+
+| Matrix / 基质 | 2 Gbp | 5 | 10 | 15 | 20 | 25 Gbp | Inflation at 2 Gbp |
+|---|---|---|---|---|---|---|---|
+| Influent / 进水 | 0.98% | 1.01% | 0.70% | 0.63% | 0.67% | 0.62% | **1.6x** |
+| Effluent / 出水 | 0.78% | 0.17% | 0.35% | 0.32% | 0.31% | 0.37% | **2.1x** |
+| Preserved / 加保存剂 | 0.46% | 0.32% | 0.22% | 0.31% | 0.30% | 0.21% | **2.2x** |
+
+**EN.** The explanation is in section 3.4: plasmids carrying an ARG are recovered about twice as
+often at low depth as plasmids without one, because acquired ARGs sit disproportionately on
+plasmids of abundant organisms. The numerator of this ratio therefore falls more slowly with depth
+than the denominator, and a shallow library inflates the estimate by roughly a factor of two.
+
+This matters more than any of the count results. A missing contig announces itself as missing. A
+ratio does not: 0.98% looks like a measurement, carries no warning that it is twice the value a
+deeper library would give, and would be reported, plotted and compared across studies exactly as
+if it were correct. Mobilome studies that compare plasmid-borne ARG fractions between sites,
+seasons or countries are comparing a quantity that moves with sequencing depth, and depth is
+rarely matched across such comparisons.
+
+Taken together, the three checks give a simple rule. **Composition survives shallow sequencing;
+counts are incomplete but honest about it; ratios between two depth-sensitive quantities are
+biased and give no sign of it.**
+
+**中文.** 解释在 3.4 节:携带 ARG 的质粒在低深度下的回收率约为不携带者的两倍,因为获得性
+ARG 不成比例地位于高丰度菌的质粒上。于是这个比值的分子随深度下降得比分母慢,浅测序文库会把
+估计值放大约一倍。
+
+这比前面任何计数结果都重要。缺失的 contig 会自己暴露出来,比例不会:0.98% 看起来就是一个
+测量值,不带任何提示说明它是更深文库所得数值的两倍,而且会被原样报告、作图,并与其他研究
+比较。那些在站点、季节或国家之间比较质粒携带 ARG 比例的 mobilome 研究,比较的是一个随测序
+深度变化的量,而这类比较很少对深度做过匹配。
+
+三项检验合起来给出一条简单规则:**组成能经受浅测序;计数不完整,但它对此是诚实的;两个
+depth-sensitive 量之间的比值则有偏,且不给出任何提示。**
+
+---
+
 ## 4. What this means in practice / 实践含义
 
 **EN.**
